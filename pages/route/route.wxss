@@ -1,0 +1,36 @@
+/**route.wxss**/
+@import "../../common/lib/weui.wxss";
+
+.route-head-container{
+  margin-left: 15rpx;
+  margin-right: 15rpx;
+}
+.route-head{
+  width: 100%;
+}
+.route-body{
+  margin-left: 15rpx;
+  margin-right: 15rpx;
+  display: flex;
+  flex-direction: column;
+}
+.route-background{
+  width: 100%;
+}
+.prize-container{
+  position: absolute;
+  margin-top: 80rpx;
+  left: 30rpx;
+  right: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+.prize-line{
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+}
+.prize-content{
+  width: 21.25%;
+  margin-left: 3%;
+}

@@ -1,0 +1,15 @@
+<template name="head">
+  <view class="page-head">
+    <image class='page-head-background' src="../../resource/head.png" mode="widthFix"></image>
+    <view wx:if="{{isHome}}" class="page-head-userinfo">
+      <image class="page-head-avatar" src="{{head}}" bindtap="tapToLogout" mode="cover"></image>
+      <text class='page-head-name'>{{name}}</text>
+    </view>
+    <block wx:else>
+      <image class="page-head-back" src="../../resource/route-back.png" bindtap="tapToBack" mode="widthFix"></image>
+    </block>
+    <image wx:if="{{isHome}}" class="page-head-route" src="../../resource/route.png" bindtap="tapToNext" mode="widthFix"></image>
+    <block wx:else>
+    </block>
+  </view>
+</template>

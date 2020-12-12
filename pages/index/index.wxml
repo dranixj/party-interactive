@@ -1,0 +1,140 @@
+<!--index.wxml-->
+<import src="../../common/head.wxml" />
+<import src="../../common/foot.wxml" />
+
+<mp-navigation-bar loading="{{loading}}" show="{{show}}" animated="{{animated}}" color="{{color}}" background="{{background}}" title="Happy New Year" back="{{back}}"></mp-navigation-bar>
+<view class="container">
+  <template is="head" data="{{head: avatar, name: realName, isHome: isHome}}"/>
+  <image class='container-background' src="../../resource/background.png" mode="widthFix"></image>
+  <view class="page-body">
+    <view wx:if="{{!hasUserInfo && !hasStaff}}">
+      <view wx:if="{{!hasUserInfo && canIUse}}" class="button-sp1-area">
+        <view class="text-box-activity-info">
+          <text>欢迎参加OHS-JHG2020忘年会,请允许获取您的头像和昵称并在稍后输入工号以参加抽奖活动</text>
+        </view>
+        <view class="button-join-area button-weixin">
+          <image class='button-join-background' src="../../resource/confirm.png" mode="widthFix"></image>
+          <button type="primary" class='button-join' plain="true" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+        </view>
+      </view>
+      <block wx:else>
+      </block>
+    </view>
+    <block wx:else>
+      <view wx:if="{{!hasStaff}}">
+        <text wx:if="{{!hasUserInfo && canIUse}}" class="user-motto">{{motto}}</text>
+        <block wx:else>
+          <view class="page-section page-section-gap">
+            <view class="login-tooltip-container">
+              <image class='login-tooltip' src="../../resource/login-tooltip.png" mode="widthFix"></image>
+              <image class='input-tooltip' src="../../resource/input-tooltip.png" mode="widthFix"></image>
+              <view class="input-staff input-radius">
+                <input class="weui-input input-content" maxlength="8" bindinput="bindKeyInput" placeholder="最大输入长度为8"/>
+              </view>
+            </view>
+          </view>
+          <view class="button-join-area button-login">
+            <image class='button-join-background' src="../../resource/confirm.png" mode="widthFix"></image>
+            <button class='button-join' plain="true" bindtap="tapInputButton"></button>
+          </view>
+        </block>
+      </view>
+      <block wx:else>
+        <view wx:if="{{desc == '等待中'}}"></view>
+        <block wx:else>
+          <view class="page-section page-section-gap">
+            <view class="text-box text-box-prize-name" scroll-y="false">
+              <text>{{prize}}</text>
+            </view>
+          </view>
+          <view class="activity-number">
+            <image class='activity-number-background' src="../../resource/activity-background.png" mode="widthFix"></image>
+            <view class="text-box-activity-number-container">
+              <view class="text-box-activity-number">
+                <text>{{processingNumber}}</text>
+              </view>
+              <view class="text-box-activity-number text-box-activity-number-sum">
+                <text>/{{prizeCount}}</text>
+              </view>
+            </view>
+            <view class="text-box-activity-number text-box-activity-number-memo">
+              <text>本轮奖品</text>
+            </view>
+          </view>
+          <view class="page-section page-section-gap join-progress-container">
+            <image class='prize-background-next' src="{{prizeBackgroundNext}}"></image>
+            <image class='prize-background' src="{{prizeBackground}}" mode="widthFix"></image>
+            <image class='prize-content' src="{{prizeContent}}" mode="widthFix"></image>
+          </view>
+          <view class="page-section page-section-gap activity-info-container">
+            <image class='activity-info-background' src="../../resource/activity-info.png" mode="widthFix"></image>
+            <view wx:if="{{winningRate != 0}}" class="activity-info-line-container">
+              <view class="activity-info-line1-container">
+                <view class="text-box-activity-info">
+                  <text>当前参与人数:</text>
+                </view>
+                <view class="text-box-activity-info text-box-activity-info-count">
+                  <text>{{processingCount}}</text>
+                </view>
+                <view class="text-box-activity-info">
+                  <text>人</text>
+                </view>
+              </view>
+              <view class="activity-info-line1-container">
+                <view class="text-box-activity-info">
+                  <text>获奖概率:</text>
+                </view>
+                <view class="text-box-activity-info text-box-activity-info-count">
+                  <text>{{winningRate}}</text>
+                </view>
+              </view>
+              <view class="activity-info-line1-container">
+                <view class="text-box-activity-info">
+                  <text>您还剩余</text>
+                </view>
+                <view class="text-box-activity-info text-box-activity-info-count">
+                  <text>{{remainingCount}}</text>
+                </view>
+                <view class="text-box-activity-info">
+                  <text>次抽奖机会</text>
+                </view>
+              </view>
+            </view>
+            <block wx:else>
+              <view class="activity-info-line-result-container">
+                <view class="activity-info-line1-container">
+                  <view wx:if="{{!shooting}}" class="text-box-activity-info text-box-activity-info-count">
+                    <text>请等待下一轮抽奖</text>
+                  </view>
+                  <block wx:else>
+                    <view class="text-box-activity-info text-box-activity-info-count text-box-activity-info-count-result">
+                      <text>恭喜,您已入围</text>
+                    </view>
+                  </block>
+                </view>
+              </view>
+            </block>
+          </view>
+        </block>
+        <view class="btn-area" id="buttonContainer">
+          <view class="button-join-area">
+            <image wx:if="{{!canIJoin}}" class='button-join-background' src="../../resource/join-dis.png" mode="widthFix"></image>
+            <block wx:else>
+              <image class='button-join-background' src="../../resource/join.png" mode="widthFix"></image>
+              <button class='button-join' plain="true" bindtap="tapJoinButton" disabled="{{!canIJoin}}"></button>
+            </block>
+          </view>
+          <view class="remaining-times-container">
+            <image class='.remaining-times' src="../../resource/times-{{remainingCount}}.png" mode="widthFix"></image>
+          </view>
+        </view>
+      </block>
+    </block>
+  </view>
+  <mp-dialog title="{{dialogTitle}}" show="{{dialogShowJump}}" bindbuttontap="tapJoin" buttons="{{[{text: '取消'}, {text: '确认'}]}}">
+    <view>{{dialogMemo}}</view>
+  </mp-dialog>
+  <mp-dialog title="{{dialogTitle}}" show="{{dialogShowLogout}}" bindbuttontap="tapLogout" buttons="{{[{text: '取消'}, {text: '确认'}]}}">
+    <view>{{dialogMemo}}</view>
+  </mp-dialog>
+</view>

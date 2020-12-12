@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "mp-navigation-bar": "../../miniprogram_npm/weui-miniprogram/miniprogram_dist/navigation-bar/navigation-bar"
+  },
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true
+}
