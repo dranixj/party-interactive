@@ -1,5 +1,9 @@
 /**index.wxss**/
 @import "../../common/lib/weui.wxss";
+page{
+  --height:44px;
+  --right:190rpx;
+}
 button{
   margin-top: 30rpx;
   margin-bottom: 30rpx;
@@ -193,11 +197,23 @@ button{
   height: 120rpx;
   margin-top: 0rpx;
   border: none !important;
+  background:transparent;
 }
+
 .remaining-times-container{
   display: flex;
 }
 .remaining-times{
   width: 140rpx;
   margin-top: -200rpx;
+}
+
+.winning-line-container{
+  height:100rpx;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

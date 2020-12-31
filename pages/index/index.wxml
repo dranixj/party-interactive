@@ -2,7 +2,7 @@
 <import src="../../common/head.wxml" />
 <import src="../../common/foot.wxml" />
 
-<mp-navigation-bar loading="{{loading}}" show="{{show}}" animated="{{animated}}" color="{{color}}" background="{{background}}" title="Happy New Year" back="{{back}}"></mp-navigation-bar>
+<mp-navigation-bar loading="{{loading}}" show="{{show}}" animated="{{animated}}" color="{{color}}" background="{{background}}" title="忘年会" back="{{back}}"></mp-navigation-bar>
 <view class="container">
   <template is="head" data="{{head: avatar, name: realName, isHome: isHome}}"/>
   <image class='container-background' src="../../resource/background.png" mode="widthFix"></image>
@@ -35,12 +35,29 @@
           </view>
           <view class="button-join-area button-login">
             <image class='button-join-background' src="../../resource/confirm.png" mode="widthFix"></image>
-            <button class='button-join' plain="true" bindtap="tapInputButton"></button>
+            <button class='button-join' style="background:transparent;" plain="true" disabled="{{loading}}" bindtap="tapInputButton"></button>
           </view>
         </block>
       </view>
       <block wx:else>
-        <view wx:if="{{desc == '等待中'}}"></view>
+        <view wx:if="{{winningPrize !== 0}}">
+          <view class="page-section page-section-gap">
+            <view class="text-box text-box-prize-name" scroll-y="false">
+              <text>{{winningPrizeName}}</text>
+            </view>
+          </view>
+          <view class="page-section page-section-gap join-progress-container">
+            <image class='prize-background' src="/resource/prize-background-17.png" mode="widthFix"></image>
+            <image class='prize-content' src="{{winningContent}}" mode="widthFix"></image>
+          </view>
+          <view class="winning-line-container">
+                  <view class="text-box-activity-info text-box-activity-info-count text-box-activity-info-count-result">
+                    <text>恭喜，您已获得该奖品</text>
+                  </view>
+          </view>
+        </view>
+        <block wx:elif="{{desc == '等待中'}}">
+        </block>
         <block wx:else>
           <view class="page-section page-section-gap">
             <view class="text-box text-box-prize-name" scroll-y="false">
@@ -116,16 +133,18 @@
             </block>
           </view>
         </block>
-        <view class="btn-area" id="buttonContainer">
-          <view class="button-join-area">
-            <image wx:if="{{!canIJoin}}" class='button-join-background' src="../../resource/join-dis.png" mode="widthFix"></image>
-            <block wx:else>
-              <image class='button-join-background' src="../../resource/join.png" mode="widthFix"></image>
-              <button class='button-join' plain="true" bindtap="tapJoinButton" disabled="{{!canIJoin}}"></button>
-            </block>
-          </view>
-          <view class="remaining-times-container">
-            <image class='.remaining-times' src="../../resource/times-{{remainingCount}}.png" mode="widthFix"></image>
+        <view wx:if="{{winningPrize == 0}}">
+          <view class="btn-area" id="buttonContainer">
+            <view class="button-join-area">
+              <image wx:if="{{!canIJoin}}" class='button-join-background' src="../../resource/join-dis.png" mode="widthFix"></image>
+              <block wx:else>
+                <image class='button-join-background' src="../../resource/join.png" mode="widthFix"></image>
+                <button class='button-join' plain='true' bindtap="tapJoinButton" disabled="{{!canIJoin}}"></button>
+              </block>
+            </view>
+            <view class="remaining-times-container">
+              <image class='.remaining-times' src="../../resource/times-{{remainingCount}}.png" mode="widthFix"></image>
+            </view>
           </view>
         </view>
       </block>

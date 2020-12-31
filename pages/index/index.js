@@ -6,6 +6,7 @@ const api = require("../../utils/requestapi")
 
 Page({
   data: {
+    isLogin: false,
     isHome: true,
     tag: '001',
     inputValue: '',
@@ -13,6 +14,7 @@ Page({
     avatar: '../../resource/default-avatar.png',
     userInfo: {},
     realName: '',
+    company: '',
     hasUserInfo: false,
     hasStaff: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -25,9 +27,11 @@ Page({
     prize: '',
     remainingCount: 0,
     shooting: 'false',
-    prizeBackground: '../../resource/prize-background-1.png',
-    prizeBackgroundNext: '../../resource/prize-background-1.png',
-    prizeContent: '../../resource/02-49.png',
+    prizeBackground: '../../resource/prize-background-17.png',
+    prizeBackgroundNext: '../../resource/prize-background-17.png',
+    prizeContent: '../../resource/02-0.png',
+    winningPrize: 0,
+    winningContent: '',
 
     loading: config.loading,
     color: config.color,
@@ -42,12 +46,15 @@ Page({
     dialogMemo: ''
   },
   onLoad: function () {
+    this.setData({
+      loading: true
+    })
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-      api.login(this, app)
+      api.init(this, app)
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -56,7 +63,7 @@ Page({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
-        api.login(this, app)
+        api.init(this, app)
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
@@ -67,31 +74,55 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
-          api.login(this, app)
+          api.init(this, app)
         }
       })
     }
   },
+  onUnload:function(){
+    //停止主程画面的数据监听
+    api.stopIndexMessageWatcher()
+    this.setData({
+      loading: false
+    })
+  },
   onShow: function () {
-    if (app.globalData.userInfo) {
-      api.login(this, app)
+    if(this.data.loading) return
+    if(this.data.inputValue!==''){
+      wx.stopPullDownRefresh()
+      return
+    }
+    this.setData({
+      loading: true
+    })
+    if (!app.globalData.userInfo) {
+      api.init(this, app)
+    }
+    else{
+      this.setData({
+        loading: false
+      })
     }
   },
   onPullDownRefresh(){
-    if (app.globalData.userInfo) {
-      api.login(this, app)
+    if(this.data.loading) return
+    if(this.data.inputValue!==''){
+      wx.stopPullDownRefresh()
+      return
     }
+    this.setData({
+      loading: true
+    })
+    api.init(this, app)
   },
   getUserInfo: function (e) {
     if (e.detail.userInfo != undefined){
       app.globalData.userInfo = e.detail.userInfo
-      app.globalData.encryptedData = e.detail.encryptedData
-      app.globalData.iv = e.detail.iv
       this.setData({
         userInfo: e.detail.userInfo,
         hasUserInfo: true
       })
-      api.login(this, app)
+      api.init(this, app)
     }
   },
   bindKeyInput(e) {
@@ -100,6 +131,10 @@ Page({
     })
   },
   tapInputButton(e) {
+    if(this.data.loading) return
+    this.setData({
+      loading: true
+    })
     api.login(this, app)
   },
   tapJoin(e) {
@@ -112,17 +147,7 @@ Page({
         loading: true,
         canIJoin: false
       })
-      api.post(
-        config.joinAct,
-        {
-          name: app.globalData.name,
-          token: app.globalData.token,
-        }, (res) => {
-          api.login(this, app)
-        }, (res) => {
-          api.login(this, app)
-        }
-      )
+      api.join(this,app)
     }
   },
   tapLogout(e) {
@@ -135,7 +160,9 @@ Page({
         loading: true,
         canIJoin: false
       })
-      api.login(this, app, '1')
+      //停止主程画面的数据监听
+      api.stopIndexMessageWatcher()
+      api.logout(this, app)
     }
   },
   tapJoinButton(e) {

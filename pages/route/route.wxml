@@ -2,7 +2,7 @@
 <import src="../../common/head.wxml" />
 <import src="../../common/foot.wxml" />
 
-<mp-navigation-bar loading="{{loading}}" show="{{show}}" animated="{{animated}}" color="{{color}}" background="{{background}}" title="Happy New Year" back="{{back}}"></mp-navigation-bar>
+<mp-navigation-bar loading="{{loading}}" show="{{show}}" animated="{{animated}}" color="{{color}}" background="{{background}}" title="奖池" back="{{back}}"></mp-navigation-bar>
 <view class="container">
   <template is="head" data="{{head: avatar, name: realName, isHome: isHome}}"/>
   <image class='container-background' src="../../resource/background.png" mode="widthFix"></image>

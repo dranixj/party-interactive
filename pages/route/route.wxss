@@ -1,6 +1,11 @@
 /**route.wxss**/
 @import "../../common/lib/weui.wxss";
 
+page{
+  --height:44px;
+  --right:190rpx;
+}
+
 .route-head-container{
   margin-left: 15rpx;
   margin-right: 15rpx;

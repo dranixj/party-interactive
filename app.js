@@ -3,11 +3,6 @@ const api = require("./utils/requestapi")
 
 App({
   onLaunch: function () {
-    // 展示本地存储能力
-    // var logs = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -39,6 +34,7 @@ App({
   },
   globalData: {
     userInfo: null,
+    open_id: undefined,
     name: '',
     times: 0,
     winning: ''

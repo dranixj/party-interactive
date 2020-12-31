@@ -9,10 +9,9 @@ Page({
   data: {
     isHome: false,
     tag: '002',
-    inputValue: '',
-    processingNumber: 1,
+    processingNumber: 0,
     logos: ['../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-2.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-2.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-2.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/easter-egg-1.png', '../../resource/easter-egg-2.png'],
-
+    defalutLogos: ['../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-2.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-2.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-2.png', '../../resource/prize-unknown-1.png', '../../resource/prize-unknown-1.png', '../../resource/easter-egg-1.png', '../../resource/easter-egg-2.png'],
     loading: config.loading,
     color: config.color,
     background: config.background,
@@ -22,15 +21,26 @@ Page({
   },
   onLoad: function () {
   },
+  onUnload:function(){
+    //停止抽奖进程画面的数据监听
+    api.stopRouteMessageWatcher()
+    this.setData({
+      loading: false
+    })
+  },
   onShow: function () {
-    if (app.globalData.userInfo) {
-      api.login(this, app)
-    }
+    if(this.data.loading) return
+    this.setData({
+      loading: true
+    })
+    api.route(this, app)
   },
   onPullDownRefresh() {
-    if (app.globalData.userInfo) {
-      api.login(this, app)
-    }
+    if(this.data.loading) return
+    this.setData({
+      loading: true
+    })
+    api.updateRoute(this, app)
   },
   tapToBack(e) {
     wx.navigateBack({

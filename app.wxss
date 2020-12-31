@@ -60,7 +60,7 @@ input {
   border-radius: 50%;
   position: absolute;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 .page-head-avatar{
@@ -70,8 +70,8 @@ input {
 }
 .page-head-name{
   color: #fff;
-  font-size: 20rpx;
-  margin-top: 5rpx;
+  font-size: 40rpx;
+  margin-left: 15rpx;
 }
 .page-head-route{
   width: 120rpx;
