@@ -82,6 +82,7 @@ Page({
   onUnload:function(){
     //停止主程画面的数据监听
     api.stopIndexMessageWatcher()
+    api.stopStaffWatcher()
     this.setData({
       loading: false
     })
@@ -162,6 +163,7 @@ Page({
       })
       //停止主程画面的数据监听
       api.stopIndexMessageWatcher()
+      api.stopStaffWatcher()
       api.logout(this, app)
     }
   },

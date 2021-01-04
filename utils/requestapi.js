@@ -90,6 +90,7 @@ const stopRouteMessageWatcher =() =>{
 
 const startStaffWatcher= (page,app) =>{
   if(staffWatcher!==null) return
+  util.log(`Start watch staff!` + app.globalData.open_id)
   staffWatcher  = db.collection('Staff').where({open_id:app.globalData.open_id})
     .watch({
       // 成功回调
@@ -107,6 +108,13 @@ const startStaffWatcher= (page,app) =>{
         init(page,app)
       }
     });
+}
+
+const stopStaffWatcher =() =>{
+  if(staffWatcher!==null){
+    staffWatcher.close()
+    staffWatcher = null
+  }
 }
 
 //登录
@@ -132,6 +140,7 @@ const logout = (page, app) =>{
     app.globalData.times = 0
     app.globalData.winning = '还未中奖'
     stopIndexMessageWatcher()
+    stopStaffWatcher()
     stopRouteMessageWatcher()
     page.setData({
       avatar: '../../resource/default-avatar.png',
@@ -186,7 +195,7 @@ const init = (page, app) => {
           success: res => {
             app.globalData.userInfo = res.userInfo
             //使用云服务器时，不再调用云函数获取OpenID
-            init_step2(page,app)
+            init_step1(page,app)
           }
         })
       }
@@ -423,4 +432,5 @@ module.exports = {
   updateRoute: updateRoute,
   stopRouteMessageWatcher: stopRouteMessageWatcher,
   stopIndexMessageWatcher: stopIndexMessageWatcher,
+  stopStaffWatcher: stopStaffWatcher,
 }
