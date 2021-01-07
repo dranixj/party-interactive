@@ -62,6 +62,9 @@ const stopIndexMessageWatcher =() =>{
 
 const startRouteMessageWatcher = (page,app) =>{
   if(routeMessageWatcher!==null){
+    page.setData({
+      loading: false,
+    })
     return
   }
   routeMessageWatcher  = db.collection('Message').doc('ALL')
@@ -369,6 +372,7 @@ const init_step2=(page,app)=>{
           }
         }, (res) => {
           //取数据出错的情况
+          util.log(`登录失败！` + res)
           page.setData({
             loading: false,
             isLogin: false

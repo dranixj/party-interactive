@@ -43,6 +43,9 @@ Page({
     api.updateRoute(this, app)
   },
   tapToBack(e) {
+    this.setData({
+      loading: false
+    })
     wx.navigateBack({
       delta: 1
     })
