@@ -2,8 +2,8 @@
 微信小程序代码（需要用微信开发工具打开）
 下载地址<https://mp.weixin.qq.com/wxamp/thirdtools>
 
-开发文档<https://developers.weixin.qq.com/miniprogram/dev/framework/>
-云开发<https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html>
++ 开发文档<https://developers.weixin.qq.com/miniprogram/dev/framework/>
++ 云开发<https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html>
 
 本程序客户端取得openid用到了云函数(云函数代码如文档示例）
 ```
@@ -17,8 +17,8 @@ exports.main = async (event, context) => {
 ```
 
 因为数据监听用客户端用到了openid,所以需要预先取得
-+后续可以修改结合API修改为POST:login接口返回openid
-+本地调试或在非小程序云端发布时API端无法通过req.headers['x-wx-openid']获取，需要预先获取openid
++ 后续可以修改结合API修改为POST:login接口返回openid
++ 本地调试或在非小程序云端发布时API端无法通过req.headers['x-wx-openid']获取，需要预先获取openid
 
 ### 配置文件(config.js)
 需配合小程序云的信息做调整
