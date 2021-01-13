@@ -68,3 +68,29 @@ logo/|02_1.png～02_14.png|各个奖品的内容Logo（抽奖进程界面用）
 logo/|02_logo1.png～02_logo14.png|各个奖品的品牌Logo（抽奖进程界面用）
 prize/|02-1.png～02-15.png|各个奖品的大图
 prize_background/|prize-background-1.png～prize-background-17.png|参加页面的背景（根据参加人数百分比变化）
+
+## 数据监听示例
+监听Staff集合的open_id为当前用户open_id的数据，如果有变化，则刷新页面
+```
+const startStaffWatcher= (page,app) =>{
+  if(staffWatcher!==null) return
+  staffWatcher  = db.collection('Staff').where({open_id:app.globalData.open_id})
+    .watch({
+      // 成功回调
+      onChange: function(snapshot) {
+        let receiveMsg = snapshot.docChanges[0]
+        if(receiveMsg!==undefined){
+          if(receiveMsg.dataType=='init') return
+          init(page,app)
+        }
+      },
+      // 失败回调
+      onError: function(err) {
+        util.log(`staffWatcher` + err)
+        staffWatcher = null
+        init(page,app)
+      }
+    });
+}
+```
+__监听实际是通过WebSocket实现。也可以在服务端使用，但不能和其他的WebSocket服务（io.socket等）并存，否则会抛出异常。__
