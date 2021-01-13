@@ -56,10 +56,15 @@ module.exports = {
 用本地服务器测试时，把post: postCloud修改为post: post
 
 ## 程序用资源文件放在小程序的存储中
-```
-cloud://interactive-5g9djyvud3542b74.696e-interactive-5g9djyvud3542b74-1304473054/
-logo/02_1.png～02_14.png  各个奖品的内容Logo（抽奖进程界面用）
-logo/02_logo1.png～02_logo14.png 各个奖品的品牌Logo（抽奖进程界面用）
-prize/02-1.png～02-15.png 各个奖品的大图
-prize_background/prize-background-1.png～prize-background-17.png 参加页面的背景（根据参加人数百分比变化）
-```
+
++ 云路径（小程序内部用）
+<cloud://interactive-5g9djyvud3542b74.696e-interactive-5g9djyvud3542b74-1304473054/>
++ HTTP路径
+<https://696e-interactive-5g9djyvud3542b74-1304473054.tcb.qcloud.la/>
+
+文件夹|文件|描述
+-|-|-
+logo/|02_1.png～02_14.png|各个奖品的内容Logo（抽奖进程界面用）
+logo/|02_logo1.png～02_logo14.png|各个奖品的品牌Logo（抽奖进程界面用）
+prize/|02-1.png～02-15.png|各个奖品的大图
+prize_background/|prize-background-1.png～prize-background-17.png|参加页面的背景（根据参加人数百分比变化）
